@@ -19,7 +19,11 @@ AI-generated "pixel art" looks like pixel art but its pixels are blurry, slightl
 
 **1. Quantize the colors.** The RGB values of all non-transparent pixels are clustered with k-means++ (fixed seed, up to 15 iterations) into the number of colors you choose. Every pixel is replaced by its nearest cluster color. This removes noise and gradients so edges become clean. Transparent pixels are ignored.
 
+![Original vs quantized to 16 colors](docs/images/en/01-quantize.png)
+
 **2. Build edge profiles.** The quantized image is converted to grayscale. For every column, the horizontal gradient `|g(x+1) - g(x-1)|` is summed over all rows, which gives one number per column. The same is done per row. Columns and rows where many pixels change color at once get high values, so the peaks mark the borders between sprite pixels.
+
+![Column and row edge profiles with detected peaks](docs/images/en/02-profiles.png)
 
 **3. Estimate the pixel size.** For each axis, local maxima above 20% of the highest value are taken as peaks, and peaks closer than 4 px are dropped. The pixel size is the median distance between consecutive peaks. The two axes are then combined:
 - if you set a manual size, it is used as is;
@@ -30,11 +34,17 @@ AI-generated "pixel art" looks like pixel art but its pixels are blurry, slightl
 
 **4. Walk the grid lines.** Starting at 0, an elastic walker jumps one pixel size ahead and searches a window around that spot (35% of the step, at least 2 px). If the strongest edge in the window is above half of the average profile value, the cut is placed on that edge. Otherwise the cut goes at the expected position. Each cut moves the walker, so the grid follows images whose pixels are slightly uneven instead of forcing a rigid grid.
 
+![Rigid grid vs walked and stabilized cuts](docs/images/en/03-grid.png)
+
 **5. Stabilize both axes.** If an axis ended up with too few cuts (fewer than 4), or its cell size is more than 1.8 times different from the other axis, its cuts are rebuilt as a uniform grid with the other axis' step, and each line is still snapped to the strongest nearby edge. A final check compares the resulting cell sizes of both axes and redoes the coarser one with the finer step if they disagree.
 
 **6. Resample.** Each cell between two consecutive vertical and horizontal cuts becomes one output pixel. Its color is the most frequent color inside the cell (ties go to the lowest RGBA value). The output size is the number of cells, so a sprite drawn at 16x16 comes back as 16x16.
 
+![Color votes inside one cell and the resulting pixel](docs/images/en/04-resample.png)
+
 **7. Optional palette.** If you pick or import a palette, every output color is replaced by the nearest palette color (Euclidean distance in RGB). Alpha is kept.
+
+![Result with each preset palette](docs/images/en/05-palette.png)
 
 ### Limits and tips
 
