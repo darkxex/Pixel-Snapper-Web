@@ -48,7 +48,7 @@ El "pixel art" generado por IA parece pixel art, pero sus píxeles están borros
 
 ### Límites y consejos
 
-- Las imágenes deben medir entre 3x3 y 10000x10000 px. Un tamaño de píxel manual debe estar entre 1 y la mitad del lado menor.
+- Las imágenes deben medir al menos 3x3 px. Un tamaño de píxel manual debe estar entre 1 y la mitad del lado menor.
 - La detección automática depende de los bordes. Las imágenes con zonas planas grandes pueden dar un tamaño de píxel incorrecto. Si el resultado se ve mal, desactiva "Detectar automáticamente" y escribe el tamaño de píxel.
 - k-means usa otro generador aleatorio que la versión en Rust, así que las imágenes con ruido pueden diferir un poco de la herramienta original. En imágenes con pocos colores exactos el resultado es idéntico píxel a píxel.
 

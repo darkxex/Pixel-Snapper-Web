@@ -259,7 +259,6 @@ select { font-family: var(--font-body); font-size: 16px; }
 
   function validateDimensions(w, h) {
     if (w === 0 || h === 0) throw fail("dims_zero", null, "Image dimensions cannot be zero");
-    if (w > 10000 || h > 10000) throw fail("dims_large", null, "Image too large (max 10000x10000)");
   }
 
   // ---------- Cuantización de color (k-means++) ----------
@@ -823,7 +822,6 @@ select { font-family: var(--font-body); font-size: 16px; }
       saved: "Saved: {name}", cancelled: "Download cancelled.",
       longPress: "Press and hold the image below to save it.",
       e_dims_zero: "Image dimensions cannot be zero.",
-      e_dims_large: "Image too large (max 10000×10000).",
       e_k_zero: "The number of colors must be greater than 0.",
       e_pal_empty: "The palette must contain at least one color.",
       e_pal_bad: "Invalid palette color '{part}': expected a 6-digit hex code.",
@@ -870,7 +868,6 @@ select { font-family: var(--font-body); font-size: 16px; }
       saved: "Guardado: {name}", cancelled: "Descarga cancelada.",
       longPress: "Mantén pulsada la imagen de abajo para guardarla.",
       e_dims_zero: "Las dimensiones de la imagen no pueden ser cero.",
-      e_dims_large: "Imagen demasiado grande (máx. 10000×10000).",
       e_k_zero: "El número de colores debe ser mayor que 0.",
       e_pal_empty: "La paleta debe contener al menos un color.",
       e_pal_bad: "Color de paleta no válido '{part}': se espera un hex de 6 dígitos.",

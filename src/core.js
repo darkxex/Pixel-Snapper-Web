@@ -37,7 +37,6 @@
 
   function validateDimensions(w, h) {
     if (w === 0 || h === 0) throw fail("dims_zero", null, "Image dimensions cannot be zero");
-    if (w > 10000 || h > 10000) throw fail("dims_large", null, "Image too large (max 10000x10000)");
   }
 
   // ---------- Cuantización de color (k-means++) ----------
