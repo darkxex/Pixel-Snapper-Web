@@ -49,7 +49,6 @@ AI-generated "pixel art" looks like pixel art but its pixels are blurry, slightl
 ### Limits and tips
 
 - Images must be between 3x3 and 10000x10000 px. A manual pixel size must be between 1 and half the smaller side.
-- This app accepts up to 6 megapixels so it stays responsive on phones.
 - Auto detection relies on edges. Images with large flat areas can give a wrong pixel size. If the result looks off, turn off "Detect automatically" and type the pixel size.
 - k-means uses a different random generator than the Rust version, so noisy images can differ slightly from the original tool. On images with few exact colors the output is identical pixel for pixel.
 

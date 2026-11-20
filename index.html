@@ -792,7 +792,7 @@ select { font-family: var(--font-body); font-size: 16px; }
       empty: "Choose an image or use the sample.",
       statSrc: "Original", statOut: "Result", statPx: "Pixel size",
       imageAria: "Image", chooseImage: "Choose image", useSample: "Use sample",
-      imageHint: "PNG or JPEG, up to 6 megapixels. You can also drag a file onto the preview.",
+      imageHint: "PNG or JPEG. You can also drag a file onto the preview.",
       settingsAria: "Settings", settings: "Settings",
       colorsLabel: "Palette colors",
       colorsHelp: "How many colors the result keeps (k-means).",
@@ -810,7 +810,6 @@ select { font-family: var(--font-body); font-size: 16px; }
       processing: "Processing…", done: "Done in {ms} ms.",
       auto: "auto", manual: "manual",
       notImage: "That file is not an image. Use PNG or JPEG.",
-      tooBig: "The image is over 6 megapixels. Reduce it and try again.",
       readFail: "Could not read the image: {msg}",
       openFail: "Could not open the image. Try another PNG or JPEG file.",
       pxNeed: "Enter a pixel size greater than 0.",
@@ -840,7 +839,7 @@ select { font-family: var(--font-body); font-size: 16px; }
       empty: "Elige una imagen o usa el ejemplo.",
       statSrc: "Original", statOut: "Resultado", statPx: "Tamaño de píxel",
       imageAria: "Imagen", chooseImage: "Elegir imagen", useSample: "Usar ejemplo",
-      imageHint: "PNG o JPEG, hasta 6 megapíxeles. También puedes arrastrar un archivo sobre la vista previa.",
+      imageHint: "PNG o JPEG. También puedes arrastrar un archivo sobre la vista previa.",
       settingsAria: "Ajustes", settings: "Ajustes",
       colorsLabel: "Colores de la paleta",
       colorsHelp: "Cuántos colores conserva el resultado (k-means).",
@@ -858,7 +857,6 @@ select { font-family: var(--font-body); font-size: 16px; }
       processing: "Procesando…", done: "Listo en {ms} ms.",
       auto: "auto", manual: "manual",
       notImage: "Ese archivo no es una imagen. Usa PNG o JPEG.",
-      tooBig: "La imagen tiene más de 6 megapíxeles. Redúcela e inténtalo de nuevo.",
       readFail: "No se pudo leer la imagen: {msg}",
       openFail: "No se pudo abrir la imagen. Prueba con otro archivo PNG o JPEG.",
       pxNeed: "Indica un tamaño de píxel mayor que 0.",
@@ -916,7 +914,6 @@ select { font-family: var(--font-body); font-size: 16px; }
     { id: "md", name: "Mega Drive · 34 (MetaruPX)", colors: "2b120d 9f1211 fc1400 fc6a00 fcfc00 000000 330445 9c0c9c ff099d 00072c 040085 0000ff 0066ff 67cdfc 004849 067826 00c908 52ff00 c6f022 352c2e 754944 ad5950 f6757a fac59b 693623 b0572b e98e42 fcb448 fffcff 666688 9892ad b8b8d1 ddd9e6 fcfcfc".split(" ") },
   ];
 
-  const MAX_PIXELS = 6000000;
   let src = null;          // { width, height, data }
   let srcKey = "sampleName"; // nombre base del archivo: clave i18n o nombre real
   let srcFile = null;
@@ -1005,10 +1002,6 @@ select { font-family: var(--font-body); font-size: 16px; }
     const im = new Image();
     im.onload = function () {
       try {
-        if (im.naturalWidth * im.naturalHeight > MAX_PIXELS) {
-          setStatus("tooBig", null, "error");
-          return;
-        }
         const c = document.createElement("canvas");
         c.width = im.naturalWidth; c.height = im.naturalHeight;
         const ctx = c.getContext("2d", { willReadFrequently: true });
